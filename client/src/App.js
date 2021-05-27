@@ -1,9 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
 import React from "react";
+import { TopNav, Container } from "./components"
+import { Card, CardContent, Typography } from "@material-ui/core"
+import { makeStyles } from '@material-ui/core/styles';
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+
+  }
+});
 
 export const App = () => {
- const [data, setData] = React.useState(null);
+  const classes = useStyles()
+  const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
     fetch("/api")
@@ -12,11 +23,17 @@ export const App = () => {
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{!data ? "Loading..." : data}</p>
-      </header>
-    </div>
+    <>
+      <TopNav />
+      <Container>
+        <Card className={classes.root}>
+          <CardContent>
+            <Typography className={classes.title} color="textSecondary" gutterBottom>
+              { data ? data : "Loading ..."}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Container>
+    </>
   );
 }
