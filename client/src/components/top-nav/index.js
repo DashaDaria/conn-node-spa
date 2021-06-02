@@ -2,6 +2,7 @@ import React from "react";
 import { AppBar, Toolbar, IconButton, Typography, Button } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu'
+import { useAuth0 } from "@auth0/auth0-react";
 
  const useStyles = makeStyles((theme) =>
   createStyles({
@@ -19,6 +20,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 
 export const TopNav = () => {
   const classes = useStyles();
+  const { loginWithRedirect, logout } = useAuth0();
 
   return (
   <AppBar position="static">
@@ -29,7 +31,9 @@ export const TopNav = () => {
     <Typography variant="h6" className={classes.title}>
       News
     </Typography>
-    <Button color="inherit">Login</Button>
+    <Button color="inherit" onClick={() => loginWithRedirect()}>Login</Button>
+    <Button color="inherit" onClick={() => logout({ returnTo: window.location.origin })}>Logout</Button>
+
   </Toolbar>
 </AppBar>
   );
